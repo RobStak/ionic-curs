@@ -1,0 +1,10 @@
+<h1> Posts</h1>
+
+<ul class="list-group">
+    <app-post *ngFor="let msg of messages | async" [msg]="msg" (clickPost)="postClicked($event)"></app-post>
+    <!-- <li *ngFor="let msg of messages | async" class="list-group-item">
+        <h2> {{msg.title}}</h2>
+        <p>{{msg.body}}</p>
+    </li> -->
+
+</ul>
