@@ -19,9 +19,19 @@ export class InicoPage implements OnInit {
         redirectTo: '/action-sheet'
       },
       {
-        icon: 'body-outline',
+        icon: 'alert-circle-outline',
         name: 'alert',
         redirectTo: '/alert'
+      },
+      {
+        icon: 'beaker-outline',
+        name: 'avatar',
+        redirectTo: '/avatar'
+      },
+      {
+        icon: 'radio-button-off-outline',
+        name: 'Buttons',
+        redirectTo: '/buttons'
       }
     ];
   }
