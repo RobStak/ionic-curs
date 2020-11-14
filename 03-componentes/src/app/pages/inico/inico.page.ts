@@ -32,6 +32,21 @@ export class InicoPage implements OnInit {
         icon: 'radio-button-off-outline',
         name: 'Buttons',
         redirectTo: '/buttons'
+      },
+      {
+        icon: 'card-outline',
+        name: 'Cards',
+        redirectTo: '/cards'
+      },
+      {
+        icon: 'checkmark-circle-outline',
+        name: 'Checks',
+        redirectTo: '/check'
+      },
+      {
+        icon: 'calendar-outline',
+        name: 'Date time',
+        redirectTo: '/date-time'
       }
     ];
   }
