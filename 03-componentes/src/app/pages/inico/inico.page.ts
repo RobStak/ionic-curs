@@ -47,6 +47,31 @@ export class InicoPage implements OnInit {
         icon: 'calendar-outline',
         name: 'Date time',
         redirectTo: '/date-time'
+      },
+      {
+        icon: 'car-outline',
+        name: 'Fab',
+        redirectTo: '/fab'
+      },
+      {
+        icon: 'grid-outline',
+        name: 'Grid',
+        redirectTo: '/grid'
+      },
+      {
+        icon: 'infinite-outline',
+        name: 'Infinite scroll',
+        redirectTo: '/infinite'
+      },
+      {
+        icon: 'hammer-outline',
+        name: 'Input forms',
+        redirectTo: '/input'
+      },
+      {
+        icon: 'list-outline',
+        name: 'List',
+        redirectTo: '/list'
       }
     ];
   }
