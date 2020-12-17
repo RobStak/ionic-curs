@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { Componente } from '../../interfaces/interfaces';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-inico',
@@ -7,79 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicoPage implements OnInit {
 
-  constructor() { }
+  constructor(private menuCtrl: MenuController,
+              private data: DataService) { }
 
-  components: Componente[] = [];
+  components: Observable<Componente[]>;
 
   ngOnInit() {
-    this.components = [
-      {
-        icon: 'american-football-outline',
-        name: 'Action sheet',
-        redirectTo: '/action-sheet'
-      },
-      {
-        icon: 'alert-circle-outline',
-        name: 'alert',
-        redirectTo: '/alert'
-      },
-      {
-        icon: 'beaker-outline',
-        name: 'avatar',
-        redirectTo: '/avatar'
-      },
-      {
-        icon: 'radio-button-off-outline',
-        name: 'Buttons',
-        redirectTo: '/buttons'
-      },
-      {
-        icon: 'card-outline',
-        name: 'Cards',
-        redirectTo: '/cards'
-      },
-      {
-        icon: 'checkmark-circle-outline',
-        name: 'Checks',
-        redirectTo: '/check'
-      },
-      {
-        icon: 'calendar-outline',
-        name: 'Date time',
-        redirectTo: '/date-time'
-      },
-      {
-        icon: 'car-outline',
-        name: 'Fab',
-        redirectTo: '/fab'
-      },
-      {
-        icon: 'grid-outline',
-        name: 'Grid',
-        redirectTo: '/grid'
-      },
-      {
-        icon: 'infinite-outline',
-        name: 'Infinite scroll',
-        redirectTo: '/infinite'
-      },
-      {
-        icon: 'hammer-outline',
-        name: 'Input forms',
-        redirectTo: '/input'
-      },
-      {
-        icon: 'list-outline',
-        name: 'List',
-        redirectTo: '/list'
-      }
-    ];
+    this.components = this.data.getMenu();;
   }
 
+  mostrarMenu(): void {
+  this.menuCtrl.open('first');
+  }
 }
 
-interface Componente{
-  icon: string;
-  name: string;
-  redirectTo: string;
-}
+
