@@ -1,17 +1,38 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as env } from '../../environments/environment.prod';
 import { ResponseTopHeadlines } from '../models/news';
+
+const headers = new HttpHeaders({
+  'X-Api-key': env.apiKey
+})
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
 
-  constructor(private http: HttpClient) { }
+  public headlinesPage: number;
+
+  public cateroyPage: number;
+  public currentCategory: string;
+
+  constructor(private http: HttpClient) {
+    this.headlinesPage = 0;
+    this.cateroyPage=0;
+   }
 
   getTopHedlines(): Observable<ResponseTopHeadlines>{
-    return this.http.get<ResponseTopHeadlines>(`http://newsapi.org/v2/top-headlines?country=us&apiKey=${env.apiKey}`)
+    this.headlinesPage++;
+    return this.http.get<ResponseTopHeadlines>(`${env.apiUrl}/top-headlines?country=us&page=${this.headlinesPage}`, {headers})
+  }
+  getTopHedlinesCategory(category: string): Observable<ResponseTopHeadlines>{
+    if (this.currentCategory != category){
+      this.currentCategory = category;
+      this.cateroyPage = 0;
+    }
+    this.cateroyPage++;
+    return this.http.get<ResponseTopHeadlines>(`${env.apiUrl}/top-headlines?country=us&category=${category}&page=${this.cateroyPage}`,{headers})
   }
 }

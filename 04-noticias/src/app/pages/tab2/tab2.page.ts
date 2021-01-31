@@ -1,5 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { IonSegment } from '@ionic/angular';
+import { NewsService } from '../../services/news.service';
+import { Article } from '../../models/news';
 
 @Component({
   selector: 'app-tab2',
@@ -12,25 +14,38 @@ export class Tab2Page implements OnInit{
   categories: string[];
   category: string;
 
-  constructor() {
+  articles: Article[];
+
+  constructor(private news: NewsService) {
     this.categories= ['business','entertainment','general','health','science','sports','technology'];
     this.category = this.categories[0];
+    this.articles = [];
   }
 
   ngOnInit(): void{
     this.segment.value = this.category;
+    this.segment.ionChange.subscribe((event) => {this.segmentChanged(event)})  
+    this.requestArticles();
   }
 
   segmentChanged(event){
-    // switch (event.detail.value) {
-    //   case 'todos':
-    //     this.filter = '';
-    //     break;
-    //   default:
-    //     this.filter = event.detail.value;
-    //     break;
-    // }
     this.category = event.detail.value;
+    this.articles = [];
+    this.requestArticles();
+  }
+
+  loadData(event): void{
+    this.requestArticles(event);
+  }
+
+  private requestArticles(event?): void{
+    this.news.getTopHedlinesCategory(this.segment.value).subscribe((response) =>{
+      this.articles.push(...response.articles);
+      if(event){
+        event.target.complete();
+        if (response.articles.length == 0){event.target.disabled = true;}
+      }
+    })
   }
 
 }
