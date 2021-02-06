@@ -4,6 +4,12 @@
             <span class="text-primary">{{i+1}}. </span>
             <span class="article-source-name"> {{article.source.name}}</span>
 
+            <div class="noticiaMore">
+                <ion-button (click)="loadMore()" fill="clear" color="primary">
+                    <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                </ion-button>
+            </div>
+
         </ion-card-subtitle>
         <ion-card-title (click)="openArticle()">{{article.title}}</ion-card-title>
     </ion-card-header>
