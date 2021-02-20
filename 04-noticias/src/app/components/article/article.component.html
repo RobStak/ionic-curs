@@ -1,14 +1,15 @@
 <ion-card color="dark">
     <ion-card-header>
-        <ion-card-subtitle>
-            <span class="text-primary">{{i+1}}. </span>
-            <span class="article-source-name"> {{article.source.name}}</span>
-
-            <div class="noticiaMore">
-                <ion-button (click)="loadMore()" fill="clear" color="primary">
-                    <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
-                </ion-button>
+        <ion-card-subtitle fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+                <span class="text-primary">{{i+1}}. </span>
+                <span class="article-source-name"> {{article.source.name}}</span>
             </div>
+
+
+            <ion-button (click)="loadMore()" fill="clear" color="primary">
+                <ion-icon name="ellipsis-vertical"></ion-icon>
+            </ion-button>
 
         </ion-card-subtitle>
         <ion-card-title (click)="openArticle()">{{article.title}}</ion-card-title>

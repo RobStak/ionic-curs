@@ -6,8 +6,16 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
+<ion-content color="dark" class="ion-padding">
 
-    <app-articles [articles]="data.articles"></app-articles>
+    <ion-slides *ngIf="data.articles.length == 0" [options]="sliderOpts">
+        <ion-slide>
+            <label>  No hi ha cap noticia preferida</label>
+        </ion-slide>
+    </ion-slides>
+
+
+
+    <app-articles *ngIf="data.articles.length > 0" [articles]="data.articles" [fav]="true"></app-articles>
 
 </ion-content>

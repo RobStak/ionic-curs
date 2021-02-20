@@ -8,7 +8,7 @@ import { Article } from 'src/app/models/news';
 })
 export class ArticlesComponent implements OnInit {
   
-  
+  @Input() fav: boolean = false
   @Input() articles: Article[];
   
   constructor() { }

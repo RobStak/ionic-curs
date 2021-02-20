@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Article } from 'src/app/models/news';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { DataService } from '../../services/data.service';
+import { Button } from 'protractor';
 
 @Component({
   selector: 'app-article',
@@ -14,11 +15,13 @@ export class ArticleComponent implements OnInit {
 
   @Input() article: Article;
   @Input() i: number;
+  @Input() fav: boolean;
 
   constructor(private iab: InAppBrowser, 
               public actionSheetCtrl: ActionSheetController,
               private socialSharing: SocialSharing,
-              private data: DataService) { }
+              private data: DataService,
+              ) { }
 
   ngOnInit() {}
 
@@ -26,9 +29,35 @@ export class ArticleComponent implements OnInit {
     const browser = this.iab.create(this.article.url,'_system');
   }
   async loadMore(): Promise<void>{
+    
+     let favButton;
 
+    if(this.fav){
+      // delete fav
+      favButton = {
+        text: 'Borrar favorito',
+        icon: 'trash',
+        cssClass: 'actionDark',
+        handler: () => {
+          console.log('Delete Favorito clicked');
+          this.data.deleteArticle(this.article);
+        }
+      }
+    } else{
+      // add favs
+      favButton = {
+        text: 'Favorito',
+        icon: 'star',
+        cssClass: 'actionDark',
+        handler: () => {
+          console.log('Favorito clicked');
+          this.data.saveArticle(this.article);
+        }
+      }
+    }
     const actionSheet = await this.actionSheetCtrl.create({
       
+
       buttons: [ {
         text: 'Compartir',
         icon: 'share',
@@ -42,16 +71,8 @@ export class ArticleComponent implements OnInit {
             this.article.url
           );
         }
-      }, {
-        text: 'Favorito',
-        icon: 'star',
-        cssClass: 'actionDark',
-        handler: () => {
-          console.log('Favorito clicked');
-          debugger
-          this.data.saveArticle(this.article);
-        }
-      }, {
+      }, favButton, 
+      {
         text: 'Cancel',
         icon: 'close',
         role: 'cancel',
@@ -60,7 +81,7 @@ export class ArticleComponent implements OnInit {
           console.log('Cancel clicked');
         }
       }]
-    });
+          });
     await actionSheet.present();
   }
 

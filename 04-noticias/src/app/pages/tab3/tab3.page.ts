@@ -8,6 +8,11 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class Tab3Page {
 
+  sliderOpts = {
+    allowSlidePrev:false,
+    allowSlideNext:false,
+  }
+
   constructor(public data: DataService) {}
 
 

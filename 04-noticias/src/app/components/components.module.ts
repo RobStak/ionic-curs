@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ArticleComponent } from './article/article.component';
 import { ArticlesComponent } from './articles/articles.component';
 import { IonicModule } from '@ionic/angular';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import { IonicModule } from '@ionic/angular';
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    FlexLayoutModule
   ], exports: [
     ArticlesComponent,
   ]
