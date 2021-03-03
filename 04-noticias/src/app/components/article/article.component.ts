@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Article } from 'src/app/models/news';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, Platform, ToastController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { DataService } from '../../services/data.service';
 import { Button } from 'protractor';
@@ -21,6 +21,8 @@ export class ArticleComponent implements OnInit {
               public actionSheetCtrl: ActionSheetController,
               private socialSharing: SocialSharing,
               private data: DataService,
+              private platform: Platform,
+
               ) { }
 
   ngOnInit() {}
@@ -64,12 +66,7 @@ export class ArticleComponent implements OnInit {
         cssClass: 'actionDark',
         handler: () => {
           console.log('Share clicked');
-          this.socialSharing.share(
-            this.article.title,
-            this.article.source.name,
-            '',
-            this.article.url
-          );
+          this.shareArticle();
         }
       }, favButton, 
       {
@@ -85,6 +82,26 @@ export class ArticleComponent implements OnInit {
     await actionSheet.present();
   }
 
+  shareArticle(): void{
+    if (this.platform.is("cordova")){
+      this.socialSharing.share(
+        this.article.title,
+        this.article.source.name,
+        '',
+        this.article.url
+      );
+    } else{
+      if (navigator.share) {
+        navigator.share({
+          title: this.article.title,
+          text: this.article.source.name,
+          url: this.article.url,
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      }
+    }
+  }
 
 
 }
