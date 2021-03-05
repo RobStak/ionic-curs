@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { movie } from '../models/movies';
 import { MoviesService } from '../services/movies.service';
 
 @Component({
@@ -8,10 +9,18 @@ import { MoviesService } from '../services/movies.service';
 })
 export class Tab1Page implements OnInit {
 
+  lastMovies: movie[];
+  
   constructor(private service: MoviesService) {}
 
   ngOnInit(){
-    this.service.getCartellera().subscribe(console.log);
+    this.service.getCartellera().subscribe( (response) =>{
+      if (response){
+        this.lastMovies = response.results;
+      }
+      console.log(response)
+    }
+      );
     
   }
 }
