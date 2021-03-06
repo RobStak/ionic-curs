@@ -15,8 +15,15 @@ export class MoviesService {
 
   constructor(private http: HttpClient) { }
 
-  getCartellera():Observable<responseMDB>{
+  getPopulars(page: number):Observable<responseMDB>{
 
+    const today = moment();
+    const nextMonthDate = moment().add(1,'M') ;
+
+    return this.getQuery<responseMDB>(`discover/movie?sort_by=popularity.desc&page=${page}`);
+  }
+
+  getCartellera(): Observable<responseMDB>{
     const today = moment();
     const nextMonthDate = moment().add(1,'M') ;
 
